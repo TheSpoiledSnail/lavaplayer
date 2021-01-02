@@ -3,23 +3,23 @@ const EventEmitter = require("events")
 
 class Client extends EventEmitter {
   
-  constructor(client, options={}) {
+  constructor(client, options) {
    
-    this.voice = options.voiceChannel
+    this.voice = options && options.voiceChannel
     
-    this.textChannel = options.textChannel
+    this.textChannel = options && options.textChannel
     
-    this.guild = options.guild
+    this.guild = options && options.guild
     
     this.client = client
     
     this.manager = new Manager({
  nodes: [{
-    host: options.host || "lavalink.something.host",
-   port: options.port || 80,
-   password: options.password || "youshallnotpass"
+    host: options && options.host || "lavalink.something.host",
+   port: options && options.port || 80,
+   password: options && options.password || "youshallnotpass"
   }],
-  autoPlay: true,
+  autoPlay: false,
   send: (id, payload) => {
     const guild = client.guilds.cache.get(id);
     if (guild) guild.shard.send(payload);
